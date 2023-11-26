@@ -1,9 +1,18 @@
 <script>
     import KakuroBoardView from '$lib/KakuroBoardView.svelte';
+    import BoardSubmission from '$lib/BoardSubmission.svelte';
+    import {onMount} from "svelte";
 
     let showingHints = true;
     let pencilMarking = false;
     let complete = false;
+
+    let activeBoard;
+
+    let user;
+    onMount(() => {
+        user = sessionStorage.getItem('username');
+    });
 </script>
 
 <main>
@@ -20,9 +29,13 @@
         </label>
     </p>
 
-    <KakuroBoardView showTooltipHints={showingHints} bind:inputtingHints={pencilMarking} bind:complete/>
+    <KakuroBoardView bind:board={activeBoard}
+            showTooltipHints={showingHints} bind:inputtingHints={pencilMarking} bind:complete/>
     <span> {@html complete?"You did it!":"<br/>"} </span>
 
+    {#if user}
+        <BoardSubmission board={activeBoard}/>
+    {/if}
 </main>
 
 <style>

@@ -1,11 +1,11 @@
 <script>
-    import { KakuroBoard, CellType } from "$lib/KakuroBoard.js";
+    import { KakuroBoard, CellType, objectToXml, XmlToObject } from "$lib/KakuroBoard.js";
     import tippy from "tippy.js";
     import 'tippy.js/dist/tippy.css';
     import 'tippy.js/themes/material.css';
     import {combinations} from "$lib/combinations.js";
 
-    let board = new KakuroBoard();
+    export let board = new KakuroBoard();
     export let inputtingHints = false;
     export let complete = false;
 

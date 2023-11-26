@@ -1,3 +1,6 @@
+import xml2js from 'xml2js';
+//import convert from "xml-js";
+
 /**
  * @enum {number}
  * @readonly
@@ -34,7 +37,7 @@ class Cell {
 
         this.horizontalFulfilled = false;
         this.verticalFulfilled = false;
-
+        this.serializationArray = [];
         if (initPotentials)
             /**
              * @type {Set.<number>}
@@ -186,7 +189,7 @@ export class KakuroBoard {
 
     checkSolution() {
         for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.height; x++) {
+            for (let x = 0; x < this.width; x++) {
                 if (this.board[y][x].type === CellType.Field) continue;
                 let run = this.getHorizontalRun(x, y);
                 if (run !== null) if(!run.checkFullfillment()) return false;
@@ -198,6 +201,64 @@ export class KakuroBoard {
         return true;
     }
 
+}
 
+/**
+ * @param {KakuroBoard} obj
+ * @returns {string}
+ */
+export function objectToXml(obj){
+    for (let y = 0; y < obj.height; y++) {
+        for (let x = 0; x < obj.width; x++) {
+            obj.board[x][y].serializationArray = {potentials: Array.from(obj.board[x][y].potentialValues)};
+            //console.log(obj.board[y][x]);
+        }
+    }
 
+    const xmlBuilder = new xml2js.Builder();
+
+    return xmlBuilder.buildObject(obj);
+}
+
+const data = new KakuroBoard();
+
+//console.log(objectToXml(data));
+
+export function XmlToObject(xml){
+    const xmlParser = new xml2js.Parser();
+
+    const board = new KakuroBoard();
+
+    xmlParser.parseString(xml, (err, result) => {
+        if (err) {
+            console.error('ERROR:', err);
+        } else {
+            board.width = result.root.width[0];
+            board.height = result.root.height[0];
+
+            for(let i = 0; i < board.height; i++){
+                for(let j = 0; j < board.width; j++){
+                    let horizontal = parseInt(result.root.board[i].horizontalClue[j]);
+                    let vertical = parseInt(result.root.board[i].verticalClue[j]);
+                    let type = parseInt(result.root.board[i].type[j]);
+                    if(type === 0){
+                        if(horizontal !== 0 && vertical !== 0){
+                            board.board[i][j] = new Cell(CellType.Clue, [horizontal, vertical]);
+                        }else if(horizontal === 0 && vertical === 0){
+                            board.board[i][j] = new Cell(CellType.Clue);
+                        }else if(vertical !== 0){
+                            board.board[i][j] = new Cell(CellType.Clue, [vertical]);
+                        }else{
+                            board.board[i][j] = new Cell(CellType.Clue, [0, horizontal]);
+                        }
+                    }else{
+                        board.board[i][j] = new Cell(CellType.Field);
+                    }
+
+                }
+            }
+
+        }
+    });
+    return board;
 }

@@ -1,10 +1,8 @@
-import { sql, createPool } from '@vercel/postgres';
-import { json } from '@sveltejs/kit';
+import { sql } from '@vercel/postgres';
 import {hashPassword, genToken, isAlphaNumeric} from "$lib/cryptography.js";
 
 export async function POST({request}) {
     try {
-        //console.log(await hashPassword('asdd'));
         const {username, password} = await request.json();
         const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
         //console.log(currentDateTime);

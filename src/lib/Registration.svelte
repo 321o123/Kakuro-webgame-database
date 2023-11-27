@@ -46,7 +46,7 @@
                 password = '';
                 confirmPassword = '';
                 error = '';
-                location.reload();
+                location.replace("/");
             }
             else
             {

@@ -4,7 +4,6 @@ import {verifyToken} from "$lib/cryptography.js";
 export async function POST({request}) {
     try {
         const {user_id, xml, name, token} = await request.json();
-        const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
         const result =
             sql`SELECT Active_token FROM Users WHERE User_id = ${user_id};`;
@@ -29,6 +28,7 @@ export async function POST({request}) {
                     },
                     status: 403});
         }
+        const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
         await sql`INSERT INTO Boards(Creator, Board_data, Name, Creation_date)
                   VALUES(${user_id}, ${xml}, ${name}, ${currentDateTime});`;

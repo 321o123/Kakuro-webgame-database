@@ -12,10 +12,13 @@
 </script>
 
 <nav>
-    <a href="/">Main</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    <button  on:click={logout}>Logout</button>
+    <a href="/">Home</a>
+    {#if user}
+        <button  on:click={logout}>Logout</button>
+    {:else}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    {/if}
     {user?'Active user: ' + user:'Not logged in'}
 </nav>
 

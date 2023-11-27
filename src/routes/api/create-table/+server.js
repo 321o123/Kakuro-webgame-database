@@ -1,5 +1,5 @@
-import { sql, createPool } from '@vercel/postgres';
-import {json, error} from "@sveltejs/kit";
+// import { sql, createPool } from '@vercel/postgres';
+// import {json, error} from "@sveltejs/kit";
 
 export async function GET({url}) {
     try {
@@ -16,7 +16,9 @@ export async function GET({url}) {
             //                                name TEXT NOT NULL,
             //                                creation_date timestamp with time zone NOT NULL,
             //                                CONSTRAINT fk_users
-            //                                FOREIGN KEY(creator) REFERENCES Users(user_id));`;
+            //                                FOREIGN KEY(creator) REFERENCES Users(user_id),
+            //                                CONSTRAINT unique_creator_name UNIQUE (creator, name)
+        //                                    );`;
             // await sql`CREATE TABLE Saves (user_id SERIAL REFERENCES Users(user_id) NOT NULL,
 //                                           board_id INTEGER REFERENCES Boards(board_id) NOT NULL,
 //                                           save_data TEXT NOT NULL,

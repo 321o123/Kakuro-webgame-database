@@ -38,7 +38,7 @@
                 username = '';
                 password = '';
                 error = '';
-                location.reload();
+                location.replace("/");
             }
             else
             {

@@ -10,6 +10,9 @@
     export let complete = false;
 
     function handleFieldKeydown(event, rowIndex, columnIndex) {
+        if (event.code === 'Tab')
+            return;
+
         if (event.key.length>=7) {
             let toFocus;
 

@@ -1,10 +1,13 @@
 <script>
-    import {objectToXml} from "./KakuroBoard.js";
+    import {boardToXml} from "./KakuroBoard.js";
+    import {createEventDispatcher} from "svelte";
 
     let name = '';
+    const dispatch = createEventDispatcher();
     export let board;
+    export let tabNavigable = true;
     async function submitBoard() {
-        let serialized = objectToXml(board);
+        let serialized = boardToXml(board);
         const response = await fetch('/api/save-board', {
             method: 'POST',
             body: JSON.stringify({
@@ -21,17 +24,20 @@
             alert("BAD");
             return;
         }
+        let newBoardId = (await response.json()).board_id;
         alert("OK");
+        dispatch("submitted", {newBoardId: newBoardId});
     }
 </script>
 <div>
     <label>
         Name your board
-        <input bind:value={name}/>
+        <input style:height="3vh" style:width="10vw" style:font-size="100%" style:overflow="hidden" tabindex={tabNavigable?"-1":"0"} bind:value={name}/>
     </label>
 </div>
 <div>
-    <button on:click={submitBoard}>
+    <button style:height="3vh" style:width="6em" style:font-size="100%" style:overflow="hidden" style:margin-bottom="1vh" tabindex={tabNavigable?"-1":"0"} on:click={submitBoard}>
         Submit
     </button>
 </div>
+

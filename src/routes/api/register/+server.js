@@ -5,7 +5,6 @@ export async function POST({request}) {
     try {
         const {username, password} = await request.json();
         const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        //console.log(currentDateTime);
 
         if(username.length === 0 || password.length === 0){
             return new Response(
@@ -77,6 +76,6 @@ export async function POST({request}) {
         };
         return new Response(JSON.stringify({error: 'This username is not available'}), options);
     } catch (e) {
-        return new Response(String(e));
+        return new Response(String(e), {status: 500});
     }
 }

@@ -34,9 +34,9 @@ export async function POST({request}) {
         }
 
         const result =
-            sql`SELECT Password_hash FROM Users WHERE Username = ${username};`;
+            await sql`SELECT Password_hash FROM Users WHERE Username = ${username};`;
 
-        if ((await result).rows.length > 0 && await verifyPassword(password, (await result).rows[0].password_hash)){
+        if (result.rows.length > 0 && await verifyPassword(password, result.rows[0].password_hash)){
             const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
             const token = await genToken(username);
             sql`UPDATE Users 
@@ -58,13 +58,13 @@ export async function POST({request}) {
         }
 
         return new Response(
-            JSON.stringify({error:'User not existing'}),{
+            JSON.stringify({error:'User not existing or wrong password'}),{
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 status: 401});
 
     }catch (e) {
-        return new Response(String(e));
+        return new Response(String(e), {status: 500});
     }
 }

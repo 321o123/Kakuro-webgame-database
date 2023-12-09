@@ -6,7 +6,6 @@ export async function hashPassword(password) {
 
     try {
         const hash = await bcrypt.hash(password, 10);
-        //console.log(hash)
         return hash;
     } catch (error) {
         console.error('Error: ', error);
@@ -24,8 +23,6 @@ export async function genToken(username){
     };
 
     const token = jwt.sign({username: username}, secretKey, { expiresIn: '1d' });
-
-    // console.log('token:', token);
 
     return token;
 }

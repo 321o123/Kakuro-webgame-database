@@ -122,8 +122,8 @@
             <line x1="5" y1="90" x2="95" y2="90" stroke="#111" stroke-width="10" stroke-linecap="round"/>
         </svg>
     </button>
-    {#if sidebarActive}
-    <div style="height: 90vh;overflow-y: scroll;overflow-x: hidden">
+
+    <div style="height: 90vh;overflow-y: scroll;overflow-x: hidden;display: {sidebarActive?'block':'none'}">
         <br/>
         <h1 style="
         text-anchor: middle;
@@ -166,7 +166,6 @@
     }}/>
     {/if}
     </div>
-    {/if}
 </aside>
 
 <div title="Hide Sidebar" on:keydown={()=>sidebarActive=false} on:click={()=>sidebarActive=false} tabindex="-1" role="button" class:overlay />

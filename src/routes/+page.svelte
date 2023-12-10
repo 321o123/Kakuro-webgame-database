@@ -9,6 +9,7 @@
     import SaveBrowser from "$lib/SaveBrowser.svelte";
     import ReviewSubmission from "$lib/ReviewSubmission.svelte";
     import {download_board} from "$lib/boardLoader.js";
+    import Device from "svelte-device-info";
 
 
     let showingHints = true;
@@ -73,7 +74,7 @@
         top: 1vh;
         transition: all .5s;
         height: 100vh;
-        width: 4vw;
+        width: var(--inactive-width);
 
         padding-top: 20px;
         border: 1px solid #ddd;
@@ -82,7 +83,7 @@
     }
     .sidebarActive {
         left: 0;
-        width: 35vw;
+        width: var(--active-width);
     }
 
     .overlay {
@@ -103,8 +104,8 @@
         position: relative;
         top: 1vh;
         left: 1vw;
-        width: 2vw;
-        height: 2vw;
+        width: var(--button-width);
+        height: var(--button-width);
         padding: 0.01vw 0.01vw;
     }
 
@@ -113,10 +114,10 @@
 
 
 
-<aside class:sidebarActive>
+<aside class:sidebarActive style:--active-width={Device.isMobile?"100vw":"35vw"} style:--inactive-width={Device.isMobile?"2em":"4vw"}>
 
-    <button  class="sidebar-button" title="Show sidebar" on:click={()=> sidebarActive = !sidebarActive} >
-        <svg width="1vw" height="1vw" style="text-align: left; vertical-align: top" viewBox="0 0 100 100">
+    <button style:--button-width={Device.isMobile?"2em":"2vw"}  class="sidebar-button" title="Show sidebar" on:click={()=> sidebarActive = !sidebarActive} >
+        <svg width={Device.isMobile?"1em":"1vw"} height={Device.isMobile?"1em":"1vw"} style="text-align: left; vertical-align: top" viewBox="0 0 100 100">
             <line x1="5" y1="10" x2="95" y2="10" stroke="#111" stroke-width="10" stroke-linecap="round"/>
             <line x1="5" y1="50" x2="95" y2="50" stroke="#111" stroke-width="10" stroke-linecap="round"/>
             <line x1="5" y1="90" x2="95" y2="90" stroke="#111" stroke-width="10" stroke-linecap="round"/>
@@ -171,7 +172,7 @@
 <div title="Hide Sidebar" on:keydown={()=>sidebarActive=false} on:click={()=>sidebarActive=false} tabindex="-1" role="button" class:overlay />
 
 
-<div style="padding-left: 4vw; display: flex; align-content: center; margin: auto">
+<div style="padding-left: {Device.isMobile?'2em':'4vw'}; display: flex; align-content: center; margin: auto">
 
 <div style=""  style:pointer-events={sidebarActive?"none":"auto" } style:font-size="2vh" >
     <div>

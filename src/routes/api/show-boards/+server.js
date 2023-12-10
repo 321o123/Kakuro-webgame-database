@@ -249,6 +249,6 @@ export async function GET({url}){
             });
 
     }catch (e) {
-        return new Response(String(e), {status: 500});
+        return new Response("Internal server error", {status: 500});
     }
 }

@@ -58,13 +58,14 @@ export async function POST({request}) {
         }
 
         return new Response(
-            JSON.stringify({error:'User not existing or wrong password'}),{
+            JSON.stringify({error:'User does not exist or incorrect password'}),{
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 status: 401});
 
     }catch (e) {
-        return new Response(String(e), {status: 500});
+        return new Response("Internal server error", {status: 500});
     }
 }
+

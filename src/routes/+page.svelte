@@ -8,6 +8,7 @@
     import BoardLoad from "$lib/BoardLoad.svelte";
     import SaveBrowser from "$lib/SaveBrowser.svelte";
     import ReviewSubmission from "$lib/ReviewSubmission.svelte";
+    import {download_board} from "$lib/boardLoader.js";
 
 
     let showingHints = true;
@@ -15,7 +16,7 @@
     let complete = false;
 
     let activeBoard;
-    let activeBoardId=-1;
+    let activeBoardId = -1;
 
     let board_list;
     let save_list;
@@ -24,6 +25,10 @@
     let user;
     onMount(() => {
         user = sessionStorage.getItem('username');
+        const board_data = download_board(54);
+        if (board_data)
+            activeBoard=XmlToBoard(board_data);
+            activeBoardId = 54;
     });
     let sidebarActive = false;
     $: overlay = sidebarActive;
@@ -136,10 +141,9 @@
                 activeBoardId= e.detail.board_id;
               }
           } bind:this={board_list}/>
-
+    {#if user}
     <hr style:position="relative" style:top="3vh"/>
-
-        <h1 style="
+    <h1 style="
         text-anchor: middle;
         left:45%;
         justify-content: center;
@@ -148,8 +152,6 @@
         top: 3vh;padding: 0;display: inline;
          line-height: 0">Saves</h1>
 
-
-    {#if user}
     <SaveBrowser on:loaded={(e)=>{
         activeBoard=XmlToBoard(e.detail.board_data);
         activeBoardId= e.detail.board_id;
@@ -170,7 +172,7 @@
 
 <div style="padding-left: 4vw; display: flex; align-content: center; margin: auto">
 
-<div   style:pointer-events={sidebarActive?"none":"auto" } style:font-size="2vh" >
+<div style=""  style:pointer-events={sidebarActive?"none":"auto" } style:font-size="2vh" >
     <div>
     <label>
         Width (max 40 min 3)

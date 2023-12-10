@@ -76,6 +76,6 @@ export async function POST({request}) {
         };
         return new Response(JSON.stringify({error: 'This username is not available'}), options);
     } catch (e) {
-        return new Response(String(e), {status: 500});
+        return new Response("Internal server error", {status: 500});
     }
 }

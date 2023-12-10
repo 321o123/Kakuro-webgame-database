@@ -23,7 +23,7 @@ export async function GET({url}) {
 //                                           board_id INTEGER REFERENCES Boards(board_id) NOT NULL,
 //                                           save_data TEXT NOT NULL,
 //                                           creation_time timestamp with time zone NOT NULL,
-//                                           Completed boolean NOT NULL DEFAULT false,
+//                                           completed boolean NOT NULL DEFAULT false,
 //                                           CONSTRAINT fk_users
 //                                           FOREIGN KEY(user_id) REFERENCES Users(user_id),
 //                                           CONSTRAINT fk_boards

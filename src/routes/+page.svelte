@@ -57,6 +57,8 @@
     let reviewDialog;
 </script>
 
+<title> Main Page of kakuro-webgame </title>
+
 <style>
     .main {
         position: relative;
@@ -113,7 +115,7 @@
 
 <aside class:sidebarActive>
 
-    <button  class="sidebar-button" on:click={()=> sidebarActive = !sidebarActive} >
+    <button  class="sidebar-button" title="Show sidebar" on:click={()=> sidebarActive = !sidebarActive} >
         <svg width="1vw" height="1vw" style="text-align: left; vertical-align: top" viewBox="0 0 100 100">
             <line x1="5" y1="10" x2="95" y2="10" stroke="#111" stroke-width="10" stroke-linecap="round"/>
             <line x1="5" y1="50" x2="95" y2="50" stroke="#111" stroke-width="10" stroke-linecap="round"/>
@@ -167,7 +169,7 @@
     {/if}
 </aside>
 
-<div on:keydown={()=>sidebarActive=false} on:click={()=>sidebarActive=false} tabindex="-1" role="button" class:overlay />
+<div title="Hide Sidebar" on:keydown={()=>sidebarActive=false} on:click={()=>sidebarActive=false} tabindex="-1" role="button" class:overlay />
 
 
 <div style="padding-left: 4vw; display: flex; align-content: center; margin: auto">

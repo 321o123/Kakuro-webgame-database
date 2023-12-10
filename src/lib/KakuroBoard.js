@@ -492,7 +492,7 @@ export function XmlToBoard(xml){
 
     xmlParser.parseString(xml, (err, result) => {
         if (err) {
-            console.error('ERROR:', err);
+            return board;
         } else {
             //console.log(result);
             board.board = [];
@@ -544,7 +544,7 @@ export function loadSave(save, board){
     const xmlParser = new xml2js.Parser();
     xmlParser.parseString(save, (err, result) => {
         if (err) {
-            console.error('ERROR:', err);
+            return;
         } else {
             let x = 0;
             for(let i = 0; i < board.height; i++){

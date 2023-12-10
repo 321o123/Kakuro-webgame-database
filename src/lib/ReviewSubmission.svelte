@@ -50,7 +50,7 @@
 </div>
 
 <div>
-    <textarea bind:this={reviewArea} style:min-width="40vh" style:min-height="10vw" placeholder="Describe yourself here..."/>
+    <textarea bind:this={reviewArea} style:min-width="40vh" style:min-height="10vw" placeholder="Write your review..."/>
 </div>
 
 <div>

@@ -9,12 +9,13 @@
     import SaveBrowser from "$lib/SaveBrowser.svelte";
     import ReviewSubmission from "$lib/ReviewSubmission.svelte";
     import {download_board} from "$lib/boardLoader.js";
-    import Device from "svelte-device-info";
-
 
     let showingHints = true;
     let pencilMarking = false;
     let complete = false;
+
+    let clientWindowHeight;
+    let clientWindowWidth;
 
     let activeBoard;
     let activeBoardId = -1;
@@ -57,6 +58,8 @@
 
     let reviewDialog;
 </script>
+
+<svelte:window bind:innerHeight={clientWindowHeight} bind:innerWidth={clientWindowWidth}/>
 
 <title> Main Page of kakuro-webgame </title>
 
@@ -114,10 +117,10 @@
 
 
 
-<aside class:sidebarActive style:--active-width={Device.isMobile?"100vw":"35vw"} style:--inactive-width={Device.isMobile?"2em":"4vw"}>
+<aside class:sidebarActive style:--active-width={clientWindowHeight>clientWindowWidth?"100vw":"35vw"} style:--inactive-width={clientWindowHeight>clientWindowWidth?"2em":"4vw"}>
 
-    <button style:--button-width={Device.isMobile?"2em":"2vw"}  class="sidebar-button" title="Show sidebar" on:click={()=> sidebarActive = !sidebarActive} >
-        <svg width={Device.isMobile?"1em":"1vw"} height={Device.isMobile?"1em":"1vw"} style="text-align: left; vertical-align: top" viewBox="0 0 100 100">
+    <button style:--button-width={clientWindowHeight>clientWindowWidth?"2em":"2vw"}  class="sidebar-button" title="Show sidebar" on:click={()=> sidebarActive = !sidebarActive} >
+        <svg width={clientWindowHeight>clientWindowWidth?"1em":"1vw"} height={clientWindowHeight>clientWindowWidth?"1em":"1vw"} style="text-align: left; vertical-align: top" viewBox="0 0 100 100">
             <line x1="5" y1="10" x2="95" y2="10" stroke="#111" stroke-width="10" stroke-linecap="round"/>
             <line x1="5" y1="50" x2="95" y2="50" stroke="#111" stroke-width="10" stroke-linecap="round"/>
             <line x1="5" y1="90" x2="95" y2="90" stroke="#111" stroke-width="10" stroke-linecap="round"/>
@@ -172,7 +175,7 @@
 <div title="Hide Sidebar" on:keydown={()=>sidebarActive=false} on:click={()=>sidebarActive=false} tabindex="-1" role="button" class:overlay />
 
 
-<div style="padding-left: {Device.isMobile?'2em':'4vw'}; display: flex; align-content: center; margin: auto">
+<div style="padding-left: {clientWindowHeight>clientWindowWidth?'2em':'4vw'}; display: flex; align-content: center; margin: auto">
 
 <div style=""  style:pointer-events={sidebarActive?"none":"auto" } style:font-size="2vh" >
     <div>
